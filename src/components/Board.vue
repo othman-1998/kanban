@@ -1,71 +1,81 @@
 <script lang="ts">
 
-  // importerer card component så vi kan brug den i vores template
-  import Card from './Card.vue';
+  // import hooks m.m. fra vue
+  import { defineComponent, ref, computed } from 'vue';
+  // importer card component så vi kan bruge den her
+  import Card from './Card.vue';  // Import card component
 
-  // export component så vi kan import den i andre filer
-  export default {
-    // navn på komponent
+  export default defineComponent({
+      // navn på komponent
     name: 'Board',
-    // child komponenter tilføjes her
+      // child components tilføjes her
     components: {
-      Card
+      Card,
     },
-    // data / komponent-states her
-    data() {
+    setup() {
+      // Reactive tasks object
+      const tasks = ref({
+        todo: [
+          { title: 'task 1', desc: 'description for task 1' },
+          { title: 'task 2', desc: 'description for task 2' },
+          { title: 'task 3', desc: 'description for task 3' },
+        ],
+        inProgress: [
+          { title: 'Task 4', desc: 'Description for Task 4' },
+          { title: 'Task 5', desc: 'Description for Task 5' },
+        ],
+        done: [
+          { title: 'Task 6', desc: 'Description for Task 6' },
+        ],
+      });
+
+      // Returner tasks, der sikrer at data er reactive
+      const todoTasks = computed(() => tasks.value.todo);
+      const inProgressTasks = computed(() => tasks.value.inProgress);
+      const doneTasks = computed(() => tasks.value.done);
+
       return {
-        tasks: {
-          todo: [
-            { title: "task 1", desc: "description for task 1" },
-            { title: "task 2", desc: "description for task 2" },
-            { title: "task 3", desc: "description for task 3" }
-          ],
-          inProgress: [
-            { title: "Task 4", desc: "Description for Task 4" },
-            { title: "Task 5", desc: "Description for Task 5" }
-          ],
-          done: [
-            { title: "Task 6", desc: "Description for Task 6" }
-          ],
-        }
+        todoTasks,
+        inProgressTasks,
+        doneTasks,
       };
     },
-    // funktioner her
-    methods: {
-    },
-  };
-  
+  });
+
 </script>
 
 <template>
   <v-container>
+    <p class="bg-white rounded text-center mb-4 text-h4 cursor-pointer d-sm-inline-block pr-2 pl-2"> 
+      + 
+    </p>
 
     <v-row>
 
-      <!-- to do -->
+      <!-- To Do -->
       <v-col>
-        <!-- sender de forventede props ned til card component -->
+      <!-- sender de forventede props ned til card component -->
         <Card
           title="To Do"
-          :tasks="tasks.todo"
+          :tasks="todoTasks"
           :group="'tasks'"
         />
       </v-col>
 
-      <!-- in progress -->
+      <!-- In Progress -->
       <v-col>
         <Card
           title="In Progress"
-          :tasks="tasks.inProgress"
+          :tasks="inProgressTasks"
           :group="'tasks'"
         />
       </v-col>
 
-      <!-- done -->
+      <!-- Done -->
       <v-col>
         <Card
           title="Done"
-          :tasks="tasks.done"
+          :tasks="doneTasks"
           :group="'tasks'"
         />
       </v-col>

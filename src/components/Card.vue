@@ -1,5 +1,6 @@
 <script lang="ts">
 
+  import { ref } from 'vue';
   import draggable from 'vuedraggable';
   import Task from './Task.vue';
 
@@ -15,7 +16,7 @@
         required: true,
       },
       tasks: {
-        type: Array,
+        type: Array as () => Array<{ title: string; desc: string }>,
         required: true,
       },
       group: {
@@ -23,8 +24,14 @@
         required: true,
       },
     },
-    methods: {
-    }
+    setup(props) {
+      // Hvis du har brug for at manipulere eller tilføje ekstra reaktivitet, kan du bruge `ref` eller `computed`
+      const tasks = ref(props.tasks);
+
+      return {
+        tasks, // Returér props eller reaktive data, som skal bruges i templatet
+      };
+    },
   };
 
 </script>
@@ -48,5 +55,5 @@
     </draggable>
 
   </v-card>
-  
+
 </template>

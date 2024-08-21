@@ -1,13 +1,19 @@
 <script lang="ts">
 
     export default {
-        name: 'Task',
-        props: {
-            task: {
-            type: String,
-            required: true,
-            },
+    name: 'Task',
+    props: {
+        task: {
+        type: Object,
+        required: true,
         },
+    },
+    setup(props) {
+        // Props kan anvendes direkte i template
+        return {
+        task: props.task,
+        };
+    },
     };
 
 </script>
