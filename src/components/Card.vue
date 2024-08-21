@@ -16,7 +16,7 @@
         required: true,
       },
       tasks: {
-        type: Array as () => Array<{ title: string; desc: string }>,
+        type: Array,
         required: true,
       },
       group: {
@@ -46,6 +46,7 @@
     <draggable
       :list="tasks"
       :group="group"
+      itemKey="title"
     >
 
       <template #item="{ element }">
