@@ -2,18 +2,24 @@
 
   // import hooks m.m. fra vue
   import { defineComponent, ref, computed } from 'vue';
+
   // importer card component så vi kan bruge den her
   import Card from './Card.vue';  // Import card component
 
   export default defineComponent({
+
     // navn på komponent
     name: 'Board',
+
     // child components tilføjes her
     components: {
       Card,
     },
+
     setup() {
+
       // vores objekter
+      // ref tracker ændringer og sikrer rerendering af komponent i tilfælde af ændring af værdierne
       const tasks = ref({
         todo: [
           { title: 'task 1', desc: 'description for task 1' },
@@ -29,7 +35,7 @@
         ],
       });
 
-      // Returner tasks, der sikrer at data er reactive
+      // computed sikrer automatisk opdateringer og cacher simpelthen værdien
       const todoTasks = computed(() => tasks.value.todo);
       const inProgressTasks = computed(() => tasks.value.inProgress);
       const doneTasks = computed(() => tasks.value.done);
@@ -39,13 +45,16 @@
         inProgressTasks,
         doneTasks,
       };
-    },
+
+    }
+
   });
 
 </script>
 
 <template>
   <v-container>
+  
     <p class="bg-white rounded text-center mb-4 text-h4 cursor-pointer d-sm-inline-block pr-2 pl-2"> 
       + 
     </p>
