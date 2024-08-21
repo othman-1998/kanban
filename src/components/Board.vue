@@ -6,14 +6,14 @@
   import Card from './Card.vue';  // Import card component
 
   export default defineComponent({
-      // navn på komponent
+    // navn på komponent
     name: 'Board',
-      // child components tilføjes her
+    // child components tilføjes her
     components: {
       Card,
     },
     setup() {
-      // Reactive tasks object
+      // vores objekter
       const tasks = ref({
         todo: [
           { title: 'task 1', desc: 'description for task 1' },

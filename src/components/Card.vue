@@ -1,10 +1,10 @@
 <script lang="ts">
 
-  import { ref } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import draggable from 'vuedraggable';
   import Task from './Task.vue';
 
-  export default {
+  export default defineComponent({
     name: 'Card',
     components: {
       Task,
@@ -32,7 +32,7 @@
         tasks, // Returér props eller reaktive data, som skal bruges i templatet
       };
     },
-  };
+  });
 
 </script>
 

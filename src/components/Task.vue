@@ -1,20 +1,22 @@
 <script lang="ts">
 
-    export default {
-    name: 'Task',
-    props: {
-        task: {
-        type: Object,
-        required: true,
+    import { defineComponent } from 'vue';
+
+    export default defineComponent({
+        name: 'Task',
+        props: {
+            task: {
+            type: Object,
+            required: true
+            },
         },
-    },
-    setup(props) {
-        // Props kan anvendes direkte i template
-        return {
-        task: props.task,
-        };
-    },
-    };
+        setup(props) {
+            // Props kan anvendes direkte i template
+            return {
+            task: props.task,
+            };
+        },
+    });
 
 </script>
 
