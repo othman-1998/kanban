@@ -1,38 +1,21 @@
-<script lang="ts">
+<script lang="ts" setup>
 
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, computed, defineProps } from 'vue';
   import draggable from 'vuedraggable';
   import Task from './Task.vue';
 
-  export default defineComponent({
-    name: 'Card',
-    components: {
-      Task,
-      draggable,
-    },
-    props: {
-      title: {
-        type: String,
-        required: true,
-      },
-      tasks: {
-        type: Array,
-        required: true,
-      },
-      group: {
-        type: String,
-        required: true,
-      },
-    },
-    setup(props) {
-      // Hvis du har brug for at manipulere eller tilføje ekstra reaktivitet, kan du bruge `ref` eller `computed`
-      const tasks = ref(props.tasks);
+  // Definerer de props vi forventer at modtage
+  const props = defineProps<{
+  title: string;
+  tasks: Array<{ title: string; desc: string }>;
+  group: string;
+  }>();
 
-      return {
-        tasks, // Returér props eller reaktive data, som skal bruges i templatet
-      };
-    },
-  });
+  // reference til vores tasks
+  const tasks = ref(props.tasks);
+
+  const title = computed(() => props.title);
+  const group = computed(() => props.group);
 
 </script>
 
