@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 
-  // import hooks m.m. fra vue
+  // import hooks m.m. from vue
   import { ref, computed } from 'vue';
 
-  // importer card component så vi kan bruge den her
+  // import card component so we can use it as childcomponent
   import Card from './Card.vue';  // Import card component
 
-  // ref tracker ændringer og sikrer rerendering af komponent i tilfælde af ændring af værdierne
+  // ref tracks changes and makes the component rerender when changes are made
   const tasks = ref([
     {
       title: "To Do",
@@ -31,6 +31,28 @@
     }
   ]);
 
+  const newTaskTitle = ref('');
+  const newTaskDesc = ref('');
+  const isActive = ref(false); // Track the modals active state
+
+  // Add task method
+  const addTask = () => {
+    if (newTaskTitle.value && newTaskDesc.value) {
+      // Adds to the first column "To Do"
+      tasks.value[0].tasks.push({
+        title: newTaskTitle.value,
+        desc: newTaskDesc.value
+      });
+
+      // making input fields empty after submitting
+      newTaskTitle.value = '';
+      newTaskDesc.value = '';
+      isActive.value = false; // Close the modal when submitting
+    } else {
+      alert('Please enter both title and description.');
+    }
+  };
+
 </script>
 
 <template>
@@ -50,19 +72,31 @@
 
       <template v-slot:default="{ isActive }">
         <v-card title="Create a new to do">
+
           <v-card-text>
-          <v-text-field label="Enter headline" variant="outlined" />
-          <v-text-field label="Enter description" variant="outlined" />
+            <v-text-field 
+              v-model="newTaskTitle"
+              label="Enter headline" 
+              variant="outlined" 
+            />
+            <v-text-field 
+              v-model="newTaskDesc"
+              label="Enter description" 
+              variant="outlined" 
+            />
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
-
             <v-btn
               text="Close"
               @click="isActive.value = false"
             ></v-btn>
+            <v-btn
+              text="Create"
+              @click="addTask"
+            ></v-btn>
           </v-card-actions>
+          
         </v-card>
       </template>
 
