@@ -31,11 +31,6 @@
     }
   ]);
 
-  // computed sikrer automatisk opdateringer og cacher simpelthen værdien
-  const todoTasks = computed(() => tasks.value.todo);
-  const inProgressTasks = computed(() => tasks.value.inProgress);
-  const doneTasks = computed(() => tasks.value.done);
-
 </script>
 
 <template>
