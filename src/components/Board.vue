@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 
-  // import hooks m.m. from vue
-  import { ref, computed } from 'vue';
+  import { ref } from 'vue';
+  import Card from './Card.vue'; 
+  import Addtask from './Addtask.vue';
 
-  // import card component so we can use it as childcomponent
-  import Card from './Card.vue';  // Import card component
-
-  // ref tracks changes and makes the component rerender when changes are made
   const tasks = ref([
     {
       title: "To Do",
@@ -31,76 +28,33 @@
     }
   ]);
 
-  const newTaskTitle = ref<string>('');
-  const newTaskDesc = ref<string>('');
-  const isActive = ref<string>(false); // Track the modals active state
+  const isActive = ref<boolean>(false); // Tracker modalens aktiv state
 
-  // Add task method
-  const addTask = () => {
-    if (newTaskTitle.value && newTaskDesc.value) {
-      // Adds to the first column "To Do"
-      tasks.value[0].tasks.push({
-        title: newTaskTitle.value,
-        desc: newTaskDesc.value
-      });
+  // Handle adding a task
+  const handleAddTask = (newTask: { title: string; desc: string }) => {
+    tasks.value[0].tasks.push(newTask); // tilføjer til første column, dvs. til to do 
+  };
 
-      // making input fields empty after submitting
-      newTaskTitle.value = '';
-      newTaskDesc.value = '';
-      isActive.value = false; // Close the modal when submitting
-    } else {
-      alert('Please enter both title and description.');
-    }
+  const handleCloseModal = () => {
+    isActive.value = false;
+  };
+
+  const handleOpenModal = () => {
+    isActive.value = true;
   };
 
 </script>
 
 <template>
+
   <v-container>
 
-    <v-dialog max-width="500">
-
-      <template v-slot:activator="{ props: activatorProps }">
-        <v-btn
-          v-bind="activatorProps"
-          color="surface-variant"
-          text="+"
-          variant="flat"
-          style="margin-bottom: 15px"
-        />
-      </template>
-
-      <template v-slot:default="{ isActive }">
-        <v-card title="Create a new to do">
-
-          <v-card-text>
-            <v-text-field 
-              v-model="newTaskTitle"
-              label="Enter headline" 
-              variant="outlined" 
-            />
-            <v-text-field 
-              v-model="newTaskDesc"
-              label="Enter description" 
-              variant="outlined" 
-            />
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn
-              text="Close"
-              @click="isActive.value = false"
-            ></v-btn>
-            <v-btn
-              text="Create"
-              @click="addTask"
-            ></v-btn>
-          </v-card-actions>
-          
-        </v-card>
-      </template>
-
-    </v-dialog>
+    <Addtask 
+      :isActive="isActive"
+      @add-task="handleAddTask"
+      @close-modal="handleCloseModal"
+      @open-modal="handleOpenModal"
+    />
 
     <v-row>
       <v-col
@@ -114,10 +68,7 @@
         />
       </v-col>
     </v-row>
-
-    <!-- Overlay -->
-    <v-overlay :value="isDialogActive" color="rgba(0, 0, 0, 0.9)">
-    </v-overlay>
-
+    
   </v-container>
+
 </template>
