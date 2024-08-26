@@ -31,9 +31,9 @@
     }
   ]);
 
-  const newTaskTitle = ref('');
-  const newTaskDesc = ref('');
-  const isActive = ref(false); // Track the modals active state
+  const newTaskTitle = ref<string>('');
+  const newTaskDesc = ref<string>('');
+  const isActive = ref<string>(false); // Track the modals active state
 
   // Add task method
   const addTask = () => {
